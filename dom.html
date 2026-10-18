@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Like Button</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Heart pop animation when liking */
+        .like-icon {
+            display: inline-block;
+            transition: transform 0.25s ease;
+        }
+        .like-icon.pop {
+            transform: scale(1.5);
+        }
+
+        /* Double-tap burst hearts */
+        #card {
+            position: relative;
+            overflow: hidden;
+        }
+        #hearts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .burst-heart {
+            position: absolute;
+            bottom: 30%;
+            font-size: 1.5rem;
+            animation: floatUp 900ms ease-out forwards;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-140px) scale(1.6) rotate(25deg); opacity: 0; }
+        }
+
+        /* User list rows */
+        .user-row {
+            transition: background-color 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div id="card" class="bg-white p-8 rounded-lg shadow-lg text-center w-80">
+        <div id="hearts"></div>
+
+        <button
+            id="likeBtn"
+            aria-pressed="false"
+            aria-label="Like this post"
+            class="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md focus:outline-none focus:ring-4 focus:ring-pink-300"
+        >
+            <span class="like-icon">❤️</span> <span class="like-text">Like</span>
+        </button>
+
+        <p id="count" class="text-gray-700 font-semibold mt-4 text-lg" aria-live="polite">0 Likes</p>
+        <p id="hint" class="text-xs text-gray-400 mt-2">Double-tap the card for a surprise ❤️ — likes are saved in this browser</p>
+
+        <!-- Arrays of objects: who liked the post -->
+        <div class="mt-6 text-left">
+            <h2 class="text-sm font-bold uppercase tracking-wide text-gray-500 mb-2">Likes from classmates</h2>
+            <ul id="userList" class="space-y-2"></ul>
+        </div>
+    </div>
+    <script src="dom.js"></script>
+</body>
+</html>
